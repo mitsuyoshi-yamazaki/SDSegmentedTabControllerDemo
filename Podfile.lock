@@ -1,0 +1,10 @@
+PODS:
+  - SDSegmentedControl (1.0.2)
+
+DEPENDENCIES:
+  - SDSegmentedControl
+
+SPEC CHECKSUMS:
+  SDSegmentedControl: 165956a426f1fd7ff1eb486c4931241f12e0867e
+
+COCOAPODS: 0.29.0
