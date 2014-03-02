@@ -8,14 +8,53 @@
 
 #import "SDAppDelegate.h"
 
+#import "SDSegmentedTabController.h"
+
 @implementation SDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    return YES;
+	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+	SDSegmentedTabController *segmentedTabController = [[SDSegmentedTabController alloc] initWithPosition:SDSegmentedTabPositionTop];
+	
+	segmentedTabController.title = @"DEMO";
+	segmentedTabController.viewControllers = @[
+											   [self childViewControllerWithTitle:@"View001" color:[UIColor magentaColor]],
+											   [self childViewControllerWithTitle:@"View002" color:[UIColor brownColor]],
+											   [self childViewControllerWithTitle:@"View003" color:[UIColor darkGrayColor]],
+											   [self childViewControllerWithTitle:@"View004" color:[UIColor cyanColor]],
+											   ];
+	
+	self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:segmentedTabController];
+	[self.window makeKeyAndVisible];
+	
+	return YES;
 }
-							
+
+- (UIViewController *)childViewControllerWithTitle:(NSString *)title color:(UIColor *)color {
+	
+	UIViewController *viewController = [[UIViewController alloc] init];
+	
+	CGRect frame = viewController.view.bounds;
+	frame.size.width -= 20.0f;
+	frame.size.height -= 20.0f;
+	
+	UILabel *label = [[UILabel alloc] initWithFrame:frame];
+	label.center = viewController.view.center;
+	label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	label.backgroundColor = color;
+	label.font = [UIFont boldSystemFontOfSize:60.0f];
+	label.textAlignment = NSTextAlignmentCenter;
+	label.textColor = [UIColor whiteColor];
+	label.text = title;
+	
+	[viewController.view addSubview:label];
+	viewController.segmentedTabItem = [[SDSegmentedTabItem alloc] initWithTitle:title];
+	
+	return viewController;
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
